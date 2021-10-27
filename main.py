@@ -26,11 +26,11 @@ class MainProgram(tk.Frame):
                               command=self.master.destroy)
 
     def layout(self):
-        self.master.geometry('400x210')
+        self.master.geometry('300x210')
         self.master.config(bg='white')
         self.data_to_code.config(bg='#777', fg='white', relief='flat',
                                     font=self.font)
-        self.data_to_code.insert(0, 'Wklej to co zakodwać')
+        self.data_to_code.insert(0, 'Paste something')
         self.save_JSON.config(bg='#777', fg='white', relief='flat',
                               width=15, height=1, font=self.font)
         self.quit.config(bg='#777', fg='white', relief='flat', width=15,
@@ -46,16 +46,16 @@ class MainProgram(tk.Frame):
             widget.grid(padx=10, pady=10,)
 
     def save_qrcode(self):
-        if not self.data_to_code.get():
-            self.info_panel['text'] = "podaj coś to zaQrCodowania"
+        if not self.data_to_code.get() or \
+                self.data_to_code.get() == "Paste something":
+            self.info_panel['text'] = "bring info to encode Qr"
             return
         self.qr.add_data(self.data_to_code.get())
         self.qr.make(fit=True)
         img = self.qr.make_image(fill_color="black", back_color="white")
         number = randint(250, 550) + randint(250, 550) + randint(250, 550)
         img.save(f"qr_code_{number}.png")
-        self.info_panel['text'] = f'zakodowano'
-        print(type(self.data_to_code.get()))
+        self.info_panel['text'] = 'Coded'
 
 
 root = tk.Tk()
